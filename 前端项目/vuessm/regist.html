@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/axios/dist/axios.js"></script>
+</head>
+<body>
+<div id="app">
+    用户名：<input v-model="u.username" @blur="yzname"/><br />
+    密码：<input v-model="u.password" @blur="yzpass"/><br />
+
+<button @click="regist">注册</button>
+</div>
+</body>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{
+            u:{
+                username:"",
+                password:"",
+                flag:false
+            }
+        },
+        methods:{
+            regist(){
+                this.yzname();
+                this.yzpass();
+                if(this.flag==true){
+                    axios.post("http://localhost:8080/ssmvue/user/regist.action",this.u).then(function(res){
+
+                        location.href="queryemp.html";
+
+                    });
+                }
+            },
+            yzname(){
+                var name=this.u.username;
+                if(name==""){
+                    alert("用户名不能为空");
+                    this.flag=false;
+                }else{
+                    this.flag=true;
+                }
+            },
+            yzpass(){
+                var pass=this.u.password;
+                if(pass==""){
+                    alert("密码不能为空");
+                    this.flag=false;
+                }else{
+                    this.flag=true;
+                }
+            }
+        }
+    })
+</script>
+</html>

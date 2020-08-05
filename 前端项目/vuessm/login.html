@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/axios/dist/axios.js"></script>
+</head>
+<body>
+<div id="app">
+    用户名：<input v-model="u.username"/><br />
+    密码：<input v-model="u.password"/><br />
+
+<button @click="login">登录</button>
+</div>
+</body>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{
+            u:{}
+        },
+        methods:{
+            login(){
+                axios.post("http://localhost:8080/ssmvue/user/login.action",this.u).then(function(res){
+                    if(res.data==""){
+                        alert("登录失败");
+                    }else{
+                        location.href="queryemp.html";
+                    }
+                });
+            }
+        }
+    })
+</script>
+</html>
